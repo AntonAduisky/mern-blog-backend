@@ -17,19 +17,19 @@ export const register = async (req, res) => {
     });
 
     const user = await doc.save();
-
+//генерируем токен в котором будет перечисленная в теле информация
     const token = jwt.sign(
       {
         _id: user._id,
       },
-      'secret123',
+      'secretKey',
       {
         expiresIn: '30d',
       },
     );
 
     const { passwordHash, ...userData } = user._doc;
-
+//возвращаем даные пользователя и токен 
     res.json({
       ...userData,
       token,
@@ -64,7 +64,7 @@ export const login = async (req, res) => {
       {
         _id: user._id,
       },
-      'secret123',
+      'secretKey',
       {
         expiresIn: '30d',
       },
